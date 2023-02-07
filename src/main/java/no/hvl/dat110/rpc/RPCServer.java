@@ -38,6 +38,7 @@ public class RPCServer {
 		
 		while (!stop) {
 	    
+		   byte [] tab;
 		   byte rpcid = 0;
 		   Message requestmsg, replymsg;
 		   
@@ -48,8 +49,28 @@ public class RPCServer {
 		   // - invoke the method
 		   // - send back the message containing RPC reply
 			
-		   if (true)
-				throw new UnsupportedOperationException(TODO.method());
+		   requestmsg = connection.receive();
+		   
+		   rpcid = requestmsg.getData()[0];
+		   
+		   tab = requestmsg.getData(); 
+		   
+		   tab = RPCUtils.decapsulate(tab);
+		   
+		   RPCRemoteImpl r = services.get(rpcid);
+		   
+		   if(services.containsKey(rpcid) && rpcid != RPCCommon.RPIDSTOP) {
+			   
+			   replymsg = new Message(r.invoke(tab));
+			   
+			   connection.send(replymsg);
+		   }
+		   
+		   //byte[] data = services.get(requestmsg.getData()[0]).invoke(RPCUtils.decapsulate(requestmsg.getData()));
+		   
+		   
+		   
+		   
 		   
 		   // TODO - END
 

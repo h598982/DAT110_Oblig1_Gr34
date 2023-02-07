@@ -12,9 +12,15 @@ public class Message {
 		
 		// TODO - START
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.constructor("Message"));
+		if (data.equals(null) || data.length > 127) {
 			
+			throw new UnsupportedOperationException(TODO.constructor("Dataen er enten null eller lengere enn 127"));
+			
+		} else {
+			
+			this.data = data;
+			
+		}
 		// TODO - END
 	}
 
